@@ -23,7 +23,7 @@ app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 
 app.use((req, res, next) => {
-  res.status(404).send({ message: "Can't find that" });
+  res.status(404).send({ message: 'Not found' });
 
   next();
 });
