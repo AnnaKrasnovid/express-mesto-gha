@@ -1,43 +1,60 @@
+/* eslint-disable max-len */
 const Card = require('../models/card');
 const ErrorNotFound = require('../error/ErrorNotFound');
+const ErrorNoRights = require('../error/ErrorNoRights');
 
-module.exports.createCard = (req, res) => {
+module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      /* if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` });
+      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
+      next(err);
     });
 };
 
-module.exports.getCards = (req, res) => {
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch((err) => res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }));
+    .catch((err) => {
+      next(err);
+    });
 };
 
-module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
-    .orFail(() => {
-      throw new ErrorNotFound('Карточка не найдена');
+module.exports.deleteCard = (req, res, next) => {
+  Card.findById(req.params.cardId)
+    .then((card) => {
+      if (!card) {
+        throw new ErrorNotFound('Карточка не найдена');
+      }
+      if (String(card.owner) !== String(req.user._id)) {
+        throw new ErrorNoRights('Нет прав на удаление');
+      }
+      console.log(req.params.cardId);
+      // res.send({ message: 'Вы удалили этот пост' });
+      return Card.findByIdAndRemove(req.params.cardId);
+      // res.send({ data: card });
+      // return res.send({ data: card });
     })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      /* if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Неверный id карточки' });
       }
       if (err.statusCode === 404) {
         return res.status(404).send({ message: err.errorMessage });
       }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` });
+      // eslint-disable-next-line max-len
+      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
+      next(err);
     });
 };
 
-module.exports.likeCard = (req, res) => {
+module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
@@ -48,17 +65,18 @@ module.exports.likeCard = (req, res) => {
     })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      /* if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Неверный id карточки' });
       }
       if (err.statusCode === 404) {
         return res.status(404).send({ message: err.errorMessage });
       }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` });
+      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
+      next(err);
     });
 };
 
-module.exports.dislikeCard = (req, res) => {
+module.exports.dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
@@ -69,12 +87,13 @@ module.exports.dislikeCard = (req, res) => {
     })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      /* if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Неверный id карточки' });
       }
       if (err.statusCode === 404) {
         return res.status(404).send({ message: err.errorMessage });
       }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` });
+      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
+      next(err);
     });
 };
