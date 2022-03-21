@@ -42,13 +42,6 @@ module.exports.getUsersId = (req, res, next) => {
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      /* if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неверный id' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -61,13 +54,6 @@ module.exports.updateUserInfo = (req, res, next) => {
     })
     .then((users) => res.send({ data: users }))
     .catch((err) => {
-      /* if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -80,13 +66,6 @@ module.exports.updateUserAvatar = (req, res, next) => {
     })
     .then((users) => res.send({ data: users }))
     .catch((err) => {
-      /* if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -96,14 +75,10 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      // аутентификация успешна! пользователь в переменной user
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.send({ token });
-      console.log(token);
     })
     .catch((err) => {
-      // ошибка аутентификации
-      /* res.status(401).send({ message: err.message }); */
       next(err);
     });
 };
@@ -115,13 +90,6 @@ module.exports.getCurrentUsers = (req, res, next) => {
     })
     .then((user) => res.send({ data: user }))
     .catch((err) => {
-      /* if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неверный id' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };

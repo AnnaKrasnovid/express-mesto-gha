@@ -9,10 +9,6 @@ module.exports.createCard = (req, res, next) => {
   Card.create({ name, link, owner })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      /* if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные' });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -34,22 +30,11 @@ module.exports.deleteCard = (req, res, next) => {
       if (String(card.owner) !== String(req.user._id)) {
         throw new ErrorNoRights('Нет прав на удаление');
       }
-      console.log(req.params.cardId);
-      // res.send({ message: 'Вы удалили этот пост' });
+      // console.log(req.params.cardId);
       return Card.findByIdAndRemove(req.params.cardId);
-      // res.send({ data: card });
-      // return res.send({ data: card });
     })
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
-      /* if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неверный id карточки' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      // eslint-disable-next-line max-len
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -65,13 +50,6 @@ module.exports.likeCard = (req, res, next) => {
     })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      /* if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неверный id карточки' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
@@ -87,13 +65,6 @@ module.exports.dislikeCard = (req, res, next) => {
     })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      /* if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неверный id карточки' });
-      }
-      if (err.statusCode === 404) {
-        return res.status(404).send({ message: err.errorMessage });
-      }
-      return res.status(500).send({ message: `Внутренняя ошибка сервера ${err.name}: ${err.message}` }); */
       next(err);
     });
 };
