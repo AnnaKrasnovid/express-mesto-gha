@@ -47,9 +47,15 @@ const checkCreateCard = celebrate({
   }),
 });
 
-const checkId = celebrate({
+const checkCardId = celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().required().hex().length(24),
+  }),
+});
+
+const checkUserId = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required().hex().length(24),
   }),
 });
 
@@ -58,6 +64,7 @@ module.exports = {
   checkUserInfo,
   checkUserAvatar,
   checkCreateCard,
-  checkId,
+  checkCardId,
+  checkUserId,
   checkLogin,
 };

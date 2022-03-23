@@ -29,7 +29,13 @@ module.exports.createUser = (req, res, next) => {
       return bcrypt.hash(password, 10);
     })
     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+      _id: user._id,
+    }))
     .catch((err) => {
       next(err);
     });
@@ -84,7 +90,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getCurrentUsers = (req, res, next) => {
-  User.findById(req.user._id).select('+password')
+  User.findById(req.user._id)
     .orFail(() => {
       throw new ErrorNotFound('Пользователь не найден');
     })

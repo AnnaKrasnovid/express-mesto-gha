@@ -7,6 +7,6 @@ router.get('/', auth, getUsers);
 router.patch('/me', auth, validation.checkUserInfo, updateUserInfo);
 router.get('/me', auth, getCurrentUsers);
 router.patch('/me/avatar', auth, validation.checkUserAvatar, updateUserAvatar);
-router.get('/users/:userId', auth, getUsersId);
+router.get('/:userId', auth, validation.checkUserId, getUsersId);
 
 module.exports = router;
