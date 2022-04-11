@@ -1,28 +1,52 @@
 [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
 
 
+# Проектная работа "Mesto" (backend)
+Написана в рамках обучения на курсе веб-разработчик [Яндекс-практикума](https://practicum.yandex.ru/profile/web/), 13-14 спринты.
+#### [Ссылка на проект](https://krasnovid.students.nomoredomains.work)
 
-## Настройка бейджей статуса тестов
-Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
-Для этого замените разметку бейджей на следующий фрагмент, подставив вместо `${имя_пользователя}` и `${имя_репозитория}` соответствующие значения.
+## Описание:
+**Mesto** -это  интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.  
+Репозиторий для приложения проекта `Mesto` `backend/`. C возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями.
 
+## Функциональность:
+* регистрация и авторизация пользователя
+* создание и удаление своих карточек с фотографиями
+* добавления и удаление лайка
+* редактирование профиля и аватарки
+* валидация данных с помощью Celebrate и регулярных выражений
+* централизованная обработка ошибок
 
-[![Tests for sprint 13](https://github.com/AnnaKrasnovid/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/AnnaKrasnovid/express-mesto-gha/actions/workflows/tests-13-sprint.yml) 
+## Используемые технологии: 
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* Celebrate
+* Winston 
 
-[![Tests for sprint 14](https://github.com/AnnaKrasnovid/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/AnnaKrasnovid/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-
-
-
-## Директории
-
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
-
-## Запуск проекта
-
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Инструкция по установке:
+Клонируем репозиторий:  
+```
+git clone https://github.com/AnnaKrasnovid/express-mesto-gha
+```  
+Переходим в папку проекта:  
+```
+cd express-mesto-gha
+```  
+Устанавливаем зависимости:  
+```
+npm install
+```  
+Запускаем MongoDB:  
+```
+mongod
+```   
+Запускаем сервер:  
+```
+npm run start
+```  
+Запускаем сервер с hot-reload:  
+```
+npm run dev
+```  
